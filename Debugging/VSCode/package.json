@@ -2,11 +2,11 @@
   "name": "ilruntime-debug",
   "displayName": "Debugger for ILRuntime",
   "version": "0.0.1",
-  "publisher": "ILRuntime",
+  "publisher": "CMonk",
   "description": "ILRuntime debugger extension",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/tianlang0704/ILRuntime/tree/master/Debugging/VSCode"
   },
   "license": "MIT",
   "engines": {
@@ -86,8 +86,7 @@
             "type": "ILRuntime",
             "request": "attach",
             "name": "Connect To ILRuntime",
-            "addressPort": "127.0.0.1:56000",
-            "stopOnEntry": true
+            "addressPort": "127.0.0.1:56000"
           }
         ],
         "configurationSnippets": [
@@ -98,8 +97,7 @@
               "type": "ILRuntime",
               "request": "attach",
               "name": "Connect To ILRuntime",
-              "addressPort": "127.0.0.1:56000",
-              "stopOnEntry": true
+              "addressPort": "127.0.0.1:56000"
             }
           }
         ]
