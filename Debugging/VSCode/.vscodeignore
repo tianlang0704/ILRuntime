@@ -1,0 +1,12 @@
+*
+**
+**/.DS_Store
+**/.mdb
+!package.json
+!bin/**
+!Changelog.txt
+!LICENSE.txt
+!README.md
+!Images/**
+!out/**
+!node_modules/**

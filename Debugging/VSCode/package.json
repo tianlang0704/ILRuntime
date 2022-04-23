@@ -1,0 +1,109 @@
+{
+  "name": "ilruntime-debug",
+  "displayName": "Debugger for ILRuntime",
+  "version": "0.0.1",
+  "publisher": "ILRuntime",
+  "description": "ILRuntime debugger extension",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.47.x"
+  },
+  "extensionDependencies": [
+    "ms-dotnettools.csharp"
+  ],
+  "devDependencies": {
+    "@types/vscode": "^1.47.0",
+    "vscode-debugprotocol": "^1.42.0"
+  },
+  "dependencies": {
+    "@types/node": "^14.14.7",
+    "make": "^0.8.1",
+    "npm": "^7.0.10",
+    "vscode-nls": "^5.0.0"
+  },
+  "categories": [
+    "Debuggers"
+  ],
+  "keywords": [
+    "ILRuntime",
+    "debugger",
+    "debug"
+  ],
+  "icon": "Images/dark/Unity.png",
+  "main": "./out/attach.js",
+  "scripts": {
+    "prepare": "make build",
+    "vscode:prepublish": "make build",
+    "compile": "make build",
+    "vsix": "make vsix",
+    "watch": "tsc -w -p ./src/typescript"
+  },
+  "activationEvents": [
+    "onDebugResolve:ILRuntime",
+    "onCommand:attach.attachToDebugger",
+    "onDebug"
+  ],
+  "contributes": {
+    "breakpoints": [
+      {
+        "language": "csharp"
+      }
+    ],
+    "commands": [
+      {
+        "command": "attach.attachToDebugger",
+        "title": "ILRuntime Attach Debugger"
+      }
+    ],
+    "debuggers": [
+      {
+        "type": "ILRuntime",
+        "label": "ILRuntime Debugger",
+        "program": "./bin/ILRuntimeDebug.exe",
+        "osx": {
+          "runtime": "mono"
+        },
+        "linux": {
+          "runtime": "mono"
+        },
+        "configurationAttributes": {
+          "attach": {
+            "properties": {
+              "addressPort": {
+                "type": "string",
+                "description": "The address and port of a ILRuntime debug server",
+                "default": "127.0.0.1:56000"
+              }
+            }
+          }
+        },
+        "initialConfigurations": [
+          {
+            "type": "ILRuntime",
+            "request": "attach",
+            "name": "Connect To ILRuntime",
+            "addressPort": "127.0.0.1:56000",
+            "stopOnEntry": true
+          }
+        ],
+        "configurationSnippets": [
+          {
+            "label": "ILRuntime Debug: Attach",
+            "description": "A new configuration for 'debugging' a user selected markdown file.",
+            "body": {
+              "type": "ILRuntime",
+              "request": "attach",
+              "name": "Connect To ILRuntime",
+              "addressPort": "127.0.0.1:56000",
+              "stopOnEntry": true
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

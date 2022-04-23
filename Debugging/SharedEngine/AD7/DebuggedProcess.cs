@@ -21,6 +21,7 @@ namespace ILRuntimeDebugEngine.AD7
         Dictionary<int, AD7PendingBreakPoint> breakpoints = new Dictionary<int, AD7PendingBreakPoint>();
         Dictionary<int, AD7Thread> threads = new Dictionary<int, AD7Thread>();
         public Dictionary<int, AD7Thread> Threads { get { return threads; } }
+        public Dictionary<int, AD7PendingBreakPoint> Breakpoints { get { return breakpoints; } }
 
         public Action OnDisconnected { get; set; }
 

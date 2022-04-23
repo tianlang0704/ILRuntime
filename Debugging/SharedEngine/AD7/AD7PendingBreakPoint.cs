@@ -56,6 +56,15 @@ namespace ILRuntimeDebugEngine.AD7
             EndLine = (int)endPosition[0].dwLine;
             EndColumn = (int)endPosition[0].dwColumn;
         }
+        public AD7PendingBreakPoint(AD7Engine engine, string docName, int startLine, int starCol, int endLine, int endCol)
+        {
+            _engine = engine;
+            DocumentName = docName;
+            StartLine = startLine;
+            StartColumn = starCol;
+            EndLine = endLine;
+            EndColumn = endCol;
+        }
         public int Bind()
         {
             TryBind();
@@ -132,10 +141,10 @@ namespace ILRuntimeDebugEngine.AD7
                 {
                     using (var stream = File.OpenRead(DocumentName))
                     {
-                        SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(SourceText.From(stream), path: DocumentName);
+                        Microsoft.CodeAnalysis.SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(SourceText.From(stream), path: DocumentName);
                         TextLine textLine = syntaxTree.GetText().Lines[StartLine];
                         Location location = syntaxTree.GetLocation(textLine.Span);
-                        SyntaxTree sourceTree = location.SourceTree;
+                        Microsoft.CodeAnalysis.SyntaxTree sourceTree = location.SourceTree;
                         SyntaxNode node = location.SourceTree.GetRoot().FindNode(location.SourceSpan, true, true);
 
                         bool isLambda = GetParentMethod<LambdaExpressionSyntax>(node.Parent) != null;

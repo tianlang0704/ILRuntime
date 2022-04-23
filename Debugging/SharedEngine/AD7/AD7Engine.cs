@@ -20,9 +20,9 @@ namespace ILRuntimeDebugEngine.AD7
         DebuggedProcess debugged;
         private Guid _programId;
 
-        internal EngineCallback Callback { get { return callback; } }
-        internal IDebugProcess2 RemoteProcess { get { return process; } }
-        internal DebuggedProcess DebuggedProcess { get { return debugged; } }
+        internal virtual EngineCallback Callback { get { return callback; } }
+        internal virtual IDebugProcess2 RemoteProcess { get { return process; } }
+        internal virtual DebuggedProcess DebuggedProcess { get { return debugged; } }
         internal bool ProgramCreateEventSent
         {
             get;

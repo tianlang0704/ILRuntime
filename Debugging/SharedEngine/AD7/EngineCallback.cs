@@ -20,7 +20,7 @@ namespace ILRuntimeDebugEngine.AD7
             _eventCallback = pCallback;
         }
 
-        public void Send(IDebugEvent2 eventObject, string iidEvent, IDebugProgram2 program, IDebugThread2 thread)
+        virtual public void Send(IDebugEvent2 eventObject, string iidEvent, IDebugProgram2 program, IDebugThread2 thread)
         {
             uint attributes;
             Guid riidEvent = new Guid(iidEvent);
@@ -29,7 +29,7 @@ namespace ILRuntimeDebugEngine.AD7
             EngineUtils.RequireOk(_eventCallback.Event(_engine, null, program, thread, eventObject, ref riidEvent, attributes));
         }
 
-        public void Send(IDebugEvent2 eventObject, string iidEvent, IDebugThread2 thread)
+        virtual public void Send(IDebugEvent2 eventObject, string iidEvent, IDebugThread2 thread)
         {
             IDebugProgram2 program = _engine;
             if (!_engine.ProgramCreateEventSent)
@@ -41,89 +41,89 @@ namespace ILRuntimeDebugEngine.AD7
             Send(eventObject, iidEvent, program, thread);
         }
 
-        public void EngineCreated()
+        virtual public void EngineCreated()
         {
             var iid = new Guid(AD7EngineCreateEvent.IID);
             _eventCallback.Event(_engine, _engine.RemoteProcess, _engine, null, new AD7EngineCreateEvent(_engine), ref iid,
                 AD7AsynchronousEvent.Attributes);
         }
 
-        public void ProgramCreated()
+        virtual public void ProgramCreated()
         {
             var iid = new Guid(AD7ProgramCreateEvent.IID);
             _eventCallback.Event(_engine, null, _engine, null, new AD7ProgramCreateEvent(), ref iid,
                 AD7AsynchronousEvent.Attributes);
         }
 
-        public void EngineLoaded()
+        virtual public void EngineLoaded()
         {
             var iid = new Guid(AD7LoadCompleteEvent.IID);
             _eventCallback.Event(_engine, _engine.RemoteProcess, _engine, null, new AD7LoadCompleteEvent(), ref iid,
                 AD7StoppingEvent.Attributes);
         }
 
-        internal void DebugEntryPoint()
+        virtual internal void DebugEntryPoint()
         {
             var iid = new Guid(AD7EntryPointEvent.IID);
             _eventCallback.Event(_engine, _engine.RemoteProcess, _engine, null, new AD7EntryPointEvent(), ref iid, AD7AsynchronousEvent.Attributes);
         }
 
-        internal void ProgramDestroyed(IDebugProgram2 program)
+        virtual internal void ProgramDestroyed(IDebugProgram2 program)
         {
             var iid = new Guid(AD7ProgramDestroyEvent.IID);
             _eventCallback.Event(_engine, null, program, null, new AD7ProgramDestroyEvent(0), ref iid, AD7AsynchronousEvent.Attributes);
         }
 
-        internal void BoundBreakpoint(AD7PendingBreakPoint breakpoint)
+        virtual internal void BoundBreakpoint(AD7PendingBreakPoint breakpoint)
         {
             var iid = new Guid(AD7BreakpointBoundEvent.IID);
             _eventCallback.Event(_engine, _engine.RemoteProcess, _engine, null, new AD7BreakpointBoundEvent(breakpoint), ref iid,
                 AD7AsynchronousEvent.Attributes);
         }
 
-        internal void ErrorBreakpoint(AD7ErrorBreakpoint breakpoint)
+        virtual internal void ErrorBreakpoint(AD7ErrorBreakpoint breakpoint)
         {
             var iid = new Guid(AD7BreakpointErrorEvent.IID);
             _eventCallback.Event(_engine, _engine.RemoteProcess, _engine, null, new AD7BreakpointErrorEvent(breakpoint), ref iid,
                 AD7AsynchronousEvent.Attributes);
         }
 
-        internal void ModuleLoaded(AD7Module module)
+        virtual internal void ModuleLoaded(AD7Module module)
         {
             var iid = new Guid(AD7ModuleLoadEvent.IID);
             _eventCallback.Event(_engine, _engine.RemoteProcess, _engine, null, new AD7ModuleLoadEvent(module, true), ref iid,
                 AD7AsynchronousEvent.Attributes);
         }
 
-        internal void BreakpointHit(AD7PendingBreakPoint breakpoint, AD7Thread thread)
+        virtual internal void BreakpointHit(AD7PendingBreakPoint breakpoint, AD7Thread thread)
         {
             var iid = new Guid(AD7BreakpointEvent.IID);
             _eventCallback.Event(_engine, _engine.RemoteProcess, _engine, thread, new AD7BreakpointEvent(breakpoint), ref iid,
                 AD7StoppingEvent.Attributes);
         }
 
-        internal void ThreadStarted(AD7Thread thread)
+        virtual internal void ThreadStarted(AD7Thread thread)
         {
             var iid = new Guid(AD7ThreadCreateEvent.IID);
             _eventCallback.Event(_engine, _engine.RemoteProcess, _engine, thread, new AD7ThreadCreateEvent(), ref iid,
                 AD7AsynchronousEvent.Attributes);
         }
 
-        internal void ThreadEnded(AD7Thread thread)
+        virtual internal void ThreadEnded(AD7Thread thread)
         {
             var iid = new Guid(AD7ThreadDestroyEvent.IID);
             _eventCallback.Event(_engine, _engine.RemoteProcess, _engine, thread, new AD7ThreadDestroyEvent(0), ref iid,
                 AD7AsynchronousEvent.Attributes);
         }
 
-        internal void StepCompleted(AD7Thread thread)
+        virtual internal void StepCompleted(AD7Thread thread)
         {
             var iid = new Guid(AD7StepCompleteEvent.IID);
             _eventCallback.Event(_engine, _engine.RemoteProcess, _engine, thread, new AD7StepCompleteEvent(), ref iid,
                 AD7StoppingEvent.Attributes);
         }
 
-        /*public void OnError(string message)
+        /*virtual public void OnError(string message)
         {
             SendMessage(message, OutputMessage.Severity.Error, isAsync: true);
         }
@@ -132,7 +132,7 @@ namespace ILRuntimeDebugEngine.AD7
         /// Sends an error to the user, blocking until the user dismisses the error
         /// </summary>
         /// <param name="message">string to display to the user</param>
-        public void OnErrorImmediate(string message)
+        virtual public void OnErrorImmediate(string message)
         {
             SendMessage(message, OutputMessage.Severity.Error, isAsync: false);
         }
@@ -154,12 +154,12 @@ namespace ILRuntimeDebugEngine.AD7
             }
         }*/
 
-        //public void OnWarning(string message)
+        //virtual public void OnWarning(string message)
         //{
         //    SendMessage(message, OutputMessage.Severity.Warning, isAsync: true);
         //}
 
-        //public void OnCustomDebugEvent(Guid guidVSService, Guid sourceId, int messageCode, object parameter1, object parameter2)
+        //virtual public void OnCustomDebugEvent(Guid guidVSService, Guid sourceId, int messageCode, object parameter1, object parameter2)
         //{
         //    var eventObject = new AD7CustomDebugEvent(guidVSService, sourceId, messageCode, parameter1, parameter2);
         //    Send(eventObject, AD7CustomDebugEvent.IID, null);

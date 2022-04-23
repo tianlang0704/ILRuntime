@@ -1,0 +1,15 @@
+bin
+obj
+packages
+*~
+*.sln.cache
+*.suo
+*.user
+*.dotCover
+*.pidb
+*.userprefs
+*.usertasks
+*.mdb
+.DS_Store
+.vs
+Makefile.in

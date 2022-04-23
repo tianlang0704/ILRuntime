@@ -1,0 +1,15 @@
+ILRuntime/obj
+bin
+*.zip
+*.vsix
+*.DotSettings.user
+.idea
+.vscode
+.vs
+node_modules
+oldExternal
+out
+obj
+packages
+TODO
+temp
