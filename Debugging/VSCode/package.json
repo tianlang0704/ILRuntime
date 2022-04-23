@@ -1,5 +1,5 @@
 {
-  "name": "ilruntime-debug",
+  "name": "ilruntime-debugger",
   "displayName": "Debugger for ILRuntime",
   "version": "0.0.1",
   "publisher": "CMonk",
